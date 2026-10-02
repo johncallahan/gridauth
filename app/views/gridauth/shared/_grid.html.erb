@@ -1,0 +1,22 @@
+<%# locals: (card:, grid: nil, highlight: []) -%>
+<table class="gridauth-table" aria-label="<%= t("gridauth.grid_cards.print.title", serial: card.serial) %>">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <% card.column_labels.each do |column| %>
+        <th scope="col"><%= column %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% card.row_labels.each do |row| %>
+      <tr>
+        <th scope="row"><%= row %></th>
+        <% card.column_labels.each do |column| %>
+          <% key = "#{column}#{row}" %>
+          <%= tag.td grid ? grid[key] : "", class: ("gridauth-highlight" if highlight.include?(key)) %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,18 @@
+<%# locals: (cells:, card:) -%>
+<div class="gridauth-fields">
+  <% cells.each_with_index do |cell, index| %>
+    <label class="gridauth-field">
+      <span aria-hidden="true"><%= cell %></span>
+      <%= text_field_tag "cells[#{cell}]", nil,
+            id: "gridauth_cell_#{cell}",
+            required: true,
+            autofocus: index.zero?,
+            autocomplete: "off",
+            autocapitalize: "characters",
+            spellcheck: false,
+            maxlength: card.cell_length,
+            size: card.cell_length + 1,
+            aria: { label: gridauth_cell_description(cell) } %>
+    </label>
+  <% end %>
+</div>

@@ -1,0 +1,44 @@
+Gridauth.configure do |config|
+  # Model that signs in, and the controller the engine's controllers inherit
+  # from (it must include the Rails `Authentication` concern).
+  config.user_class = "User"
+  # config.parent_controller = "ApplicationController"
+  # config.sign_in_route = :new_session_path
+
+  # Card layout. Each cell holds `cell_length` characters from `alphabet`.
+  # config.rows = 5
+  # config.columns = 10
+  # config.cell_length = 2
+  # config.alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+  # config.case_sensitive = false
+
+  # Cells asked for at each sign-in, and how long the user has to answer.
+  # config.challenge_size = 3
+  # config.challenge_timeout = 5.minutes
+
+  # Lock the card after this many consecutive wrong answers.
+  # config.max_failed_attempts = 5
+  # config.lockout_period = 15.minutes
+
+  # Rotation: a card is due for replacement after this long (nil disables)
+  # or after this many sign-ins (nil disables).
+  # config.rotation_period = 180.days
+  # config.rotate_after_uses = nil
+
+  # Policy. With enforce_enrollment every user must set up a card; with
+  # enforce_rotation the app is blocked until a due card is replaced.
+  # config.enforce_enrollment = false
+  # config.enforce_rotation = false
+  # config.policy_exempt_controllers = %w[sessions passwords]
+
+  # Require the current password to activate a card or turn 2FA off.
+  # config.require_password_for_changes = true
+  # config.allow_disable = true
+
+  # Printed on the card.
+  # config.user_label_attribute = :email_address
+
+  # Key for HMACing card cells. Defaults to one derived from secret_key_base;
+  # changing it invalidates every issued card.
+  # config.secret_key = Rails.application.credentials.dig(:gridauth, :secret_key)
+end

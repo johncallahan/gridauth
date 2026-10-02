@@ -1,0 +1,4 @@
+<h1>Home</h1>
+<p>Signed in as <%= Current.session.user.email_address %>.</p>
+<p><%= link_to "Grid card settings", gridauth_grid_card_path %></p>
+<%= button_to "Sign out", session_path, method: :delete %>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <title><%= t(".title", serial: @pending_card.serial) %></title>
+    <%= gridauth_styles %>
+    <%= tag.style nonce: content_security_policy_nonce do %>
+      body { margin: 0; }
+      .gridauth-print { display: inline-block; margin: 1.5rem; padding: 1rem 1.25rem; border: 2px dashed #555; font-family: system-ui, sans-serif; }
+      .gridauth-print h1 { font-size: 1.1rem; margin: 0 0 0.5rem; }
+      @media print { .gridauth-no-print { display: none; } }
+    <% end %>
+  </head>
+  <body>
+    <div class="gridauth-print">
+      <h1><%= t(".title", serial: @pending_card.serial) %></h1>
+      <%= render "gridauth/shared/grid", card: @pending_card, grid: @grid %>
+      <p class="gridauth-card-meta">
+        <% if (label = gridauth_user_label(@user)) %>
+          <%= t(".issued_to") %>: <%= label %><br>
+        <% end %>
+        <%= t(".issued_at") %>: <%= l(@pending_card.created_at.in_time_zone.to_date, format: :long) %>
+      </p>
+      <p class="gridauth-card-meta"><%= t(".keep_safe") %></p>
+    </div>
+    <p class="gridauth-no-print"><button type="button" id="gridauth-print-button"><%= t(".print") %></button></p>
+    <%= javascript_tag nonce: true do %>
+      document.getElementById("gridauth-print-button").addEventListener("click", function () { window.print() })
+    <% end %>
+  </body>
+</html>

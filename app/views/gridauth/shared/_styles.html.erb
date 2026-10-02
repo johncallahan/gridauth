@@ -1,0 +1,18 @@
+<%= tag.style nonce: content_security_policy_nonce do %>
+  .gridauth { max-width: 44rem; margin: 2rem auto; font-family: system-ui, sans-serif; line-height: 1.5; }
+  .gridauth section { margin: 1.5rem 0; padding: 1.25rem; border: 1px solid #d0d4da; border-radius: 0.5rem; }
+  .gridauth-table { border-collapse: collapse; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1.05rem; }
+  .gridauth-table th, .gridauth-table td { border: 1px solid #9aa1ab; padding: 0.3rem 0.55rem; text-align: center; min-width: 2.2rem; }
+  .gridauth-table th { background: #eef0f3; font-weight: 600; }
+  .gridauth-table td.gridauth-highlight { background: #ffe58a; outline: 2px solid #b08800; }
+  .gridauth-card-meta { font-size: 0.9rem; color: #4a5160; }
+  .gridauth-fields { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+  .gridauth-fields label { display: flex; flex-direction: column; font-weight: 600; }
+  .gridauth-fields input { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1.25rem; width: 5rem; text-align: center; text-transform: uppercase; }
+  .gridauth-field input { margin-top: 0.25rem; }
+  .gridauth-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+  .gridauth-alert { color: #9b1c1c; }
+  .gridauth dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.25rem 1rem; }
+  .gridauth dt { font-weight: 600; }
+  .gridauth dd { margin: 0; }
+<% end %>

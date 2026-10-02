@@ -1,0 +1,20 @@
+<%= gridauth_styles %>
+
+<div class="gridauth">
+  <h1><%= t(".title") %></h1>
+
+  <% if @card.locked? %>
+    <p class="gridauth-alert"><%= t(".locked", time: l(@card.locked_until.in_time_zone, format: :short)) %></p>
+  <% else %>
+    <p><%= t(".intro", serial: @card.serial) %></p>
+
+    <%= render "gridauth/shared/grid", card: @card, highlight: @cells %>
+
+    <%= form_with url: gridauth_challenge_path, method: :post do %>
+      <%= render "gridauth/shared/challenge_fields", cells: @cells, card: @card %>
+      <%= submit_tag t(".submit") %>
+    <% end %>
+  <% end %>
+
+  <p><%= button_to t(".cancel"), gridauth_challenge_path, method: :delete %></p>
+</div>

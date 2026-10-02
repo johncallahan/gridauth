@@ -1,0 +1,89 @@
+<%= gridauth_styles %>
+
+<div class="gridauth">
+  <h1><%= t(".title") %></h1>
+
+  <% if @grid %>
+    <section>
+      <h2><%= t(".new_title") %></h2>
+      <p><%= t(".new_intro") %></p>
+      <p class="gridauth-card-meta"><%= t(".serial") %>: <strong><%= @pending_card.serial %></strong></p>
+      <%= render "gridauth/shared/grid", card: @pending_card, grid: @grid %>
+      <p><%= link_to t(".print"), print_gridauth_grid_card_path, target: "_blank", rel: "noopener" %></p>
+    </section>
+
+    <section>
+      <h2><%= t(".activate_title") %></h2>
+      <% if @pending_card.locked? %>
+        <p class="gridauth-alert"><%= t(".locked", time: l(@pending_card.locked_until.in_time_zone, format: :short)) %></p>
+      <% else %>
+        <p><%= t(".activate_intro") %></p>
+        <%= form_with url: activate_gridauth_grid_card_path, method: :post do %>
+          <%= render "gridauth/shared/challenge_fields", cells: @cells, card: @pending_card %>
+          <% if Gridauth.config.require_password_for_changes %>
+            <p>
+              <%= label_tag :gridauth_activate_password, t(".password") %><br>
+              <%= password_field_tag :password, nil, id: :gridauth_activate_password, required: true, autocomplete: "current-password" %>
+            </p>
+          <% end %>
+          <%= submit_tag t(".activate") %>
+        <% end %>
+      <% end %>
+      <p><%= button_to t(".discard"), discard_gridauth_grid_card_path, method: :delete %></p>
+    </section>
+  <% elsif @pending_card %>
+    <section>
+      <h2><%= t(".lost_title") %></h2>
+      <p><%= t(".lost") %></p>
+      <%= button_to t(".reissue"), gridauth_grid_card_path, method: :post %>
+    </section>
+  <% end %>
+
+  <% if @card %>
+    <section>
+      <h2><%= t(".active_title") %></h2>
+      <dl>
+        <dt><%= t(".serial") %></dt>
+        <dd><%= @card.serial %></dd>
+        <dt><%= t(".activated_at") %></dt>
+        <dd><%= l(@card.activated_at.in_time_zone, format: :long) %></dd>
+        <dt><%= t(".last_used_at") %></dt>
+        <dd><%= @card.last_used_at ? l(@card.last_used_at.in_time_zone, format: :long) : t(".never") %></dd>
+        <dt><%= t(".use_count") %></dt>
+        <dd><%= @card.use_count %></dd>
+        <% if @card.rotation_due_at %>
+          <dt><%= t(".rotation_due_at") %></dt>
+          <dd><%= l(@card.rotation_due_at.in_time_zone.to_date, format: :long) %></dd>
+        <% end %>
+      </dl>
+      <% if @card.rotation_due? %>
+        <p class="gridauth-alert"><%= t(".rotation_due") %></p>
+      <% end %>
+      <% unless @grid %>
+        <p><%= t(".rotate_intro") %></p>
+        <%= button_to t(".rotate"), gridauth_grid_card_path, method: :post %>
+      <% end %>
+    </section>
+
+    <% if Gridauth.config.allow_disable && !Gridauth.config.enforce_enrollment %>
+      <section>
+        <h2><%= t(".disable_title") %></h2>
+        <p><%= t(".disable_intro") %></p>
+        <%= form_with url: gridauth_grid_card_path, method: :delete do %>
+          <% if Gridauth.config.require_password_for_changes %>
+            <p>
+              <%= label_tag :gridauth_disable_password, t(".password") %><br>
+              <%= password_field_tag :password, nil, id: :gridauth_disable_password, required: true, autocomplete: "current-password" %>
+            </p>
+          <% end %>
+          <%= submit_tag t(".disable") %>
+        <% end %>
+      </section>
+    <% end %>
+  <% elsif !@pending_card %>
+    <section>
+      <p><%= t(".none") %></p>
+      <%= button_to t(".issue"), gridauth_grid_card_path, method: :post %>
+    </section>
+  <% end %>
+</div>
