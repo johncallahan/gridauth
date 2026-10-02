@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
                      "challenge step after the password sign-in."
   spec.license     = "MIT"
   spec.required_ruby_version = ">= 3.2"
+  spec.homepage = "https://github.com/johncallahan/gridauth"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     Dir["{app,config,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md", "CHANGELOG.md"]
